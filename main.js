@@ -59,8 +59,9 @@ const fetchIssues = () => {
 
   for (var i = 0; i < issues.length; i++) {
     const { id, description, severity, assignedTo, status } = issues[i];
-
-    issuesList.innerHTML += `<div class="well">
+    const issueCard = document.createElement("div");
+    issueCard.classList.add("well", "col-lg-6", "margin");
+    issueCard.innerHTML = `
                               <h6>Issue ID: ${id} </h6>
                               <p><span class="label  ${
                                 status === "Open"
@@ -76,6 +77,7 @@ const fetchIssues = () => {
       status === "Open" ? "btn-warning" : "btn-info"
     }"">${status === "Closed" ? "Open" : "Close"}</button>
                               <button  onclick="deleteIssue(${id})" class="btn btn-danger">Delete</button>
-                              </div>`;
+                              `;
+    issuesList.append(issueCard);
   }
 };
