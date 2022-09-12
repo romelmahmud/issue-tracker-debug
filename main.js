@@ -36,13 +36,11 @@ function submitIssue(e) {
   e.preventDefault();
 }
 
-const closeIssue = (id) => {
-  console.log(id);
+const toggleIssue = (id, status) => {
+  console.log(id, status);
   const issues = JSON.parse(localStorage.getItem("issues"));
-  console.log(issues);
   const currentIssue = issues.find((issue) => issue.id === id + "");
-  console.log(currentIssue);
-  currentIssue.status = "Closed";
+  currentIssue.status = `${status === "Closed" ? "Open" : "Closed"}`;
   localStorage.setItem("issues", JSON.stringify(issues));
   fetchIssues();
 };
@@ -74,7 +72,9 @@ const fetchIssues = () => {
                               }> ${description} </h3>
                               <p><span class="glyphicon glyphicon-time"></span> ${severity}</p>
                               <p><span class="glyphicon glyphicon-user"></span> ${assignedTo}</p>
-                              <button  onclick="closeIssue(${id})" class="btn btn-warning">Close</button>
+                              <button  onclick="toggleIssue(${id}, '${status}')" class="btn  ${
+      status === "Open" ? "btn-warning" : "btn-info"
+    }"">${status === "Closed" ? "Open" : "Close"}</button>
                               <button  onclick="deleteIssue(${id})" class="btn btn-danger">Delete</button>
                               </div>`;
   }
